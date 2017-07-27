@@ -16,7 +16,7 @@ spec:
             alpha.kubernetes.io/nvidia-gpu: 1
         volumeMounts:
           - name: "nvidia-libraries"
-            mountPath: "/usr/local/nvidia/lib64"
+            mountPath: "/usr/local/nvidia/lib64" # This path is special; it is expected to be present in `/etc/ld.so.conf` inside the container image.
       restartPolicy: Never
       volumes:
         - name: "nvidia-libraries"

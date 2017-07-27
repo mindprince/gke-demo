@@ -1,8 +1,41 @@
 # To start the cluster
-gcloud alpha container clusters create --enable-kubernetes-alpha --accelerator=type=nvidia-tesla-k80,count=2 --zone=us-west1-b --cluster-version 1.7.1 my-gpu-cluster
+gcloud alpha container clusters create --enable-kubernetes-alpha --accelerator=type=nvidia-tesla-k80,count=2 --zone=us-west1-b --cluster-version=1.7.2 gpu-cluster-1
 
 # To install the drivers
 kubectl create -f https://raw.githubusercontent.com/ContainerEngine/accelerators/master/cos-nvidia-gpu-installer/daemonset.yaml
 
 # Check whether kubectl sees GPUs
 kubectl get nodes -o yaml | grep -E 'hostname:|nvidia-gpu'
+
+------
+
+# Start the tensorflow job with CPUs
+kubectl create -f tensorflow-cpu/cpu-job.yaml
+
+# Check that the job is finished
+kubectl get all
+
+# Start the tensorflow job with GPUs
+kubectl create -f tensorflow-gpu/gpu-job.yaml
+
+# Check that the job is finished
+kubectl get all
+
+# See the results
+kubectl logs jobs/tensorflow-cpu | tail -25
+kubectl logs jobs/tensorflow-gpu | tail -25
+
+# Cleanup
+kubectl delete jobs/tensorflow-cpu jobs/tensorflow-gpu
+
+# List of files
+find . | grep -v git
+
+# Only the tensorflow package is different
+git diff --no-index ./tensorflow-cpu/Dockerfile ./tensorflow-gpu/Dockerfile
+
+# No difference in the tensorflow program
+git diff --no-index ./tensorflow-cpu/matmul.py ./tensorflow-gpu/matmul.py
+
+# Important differences
+git diff --no-index ./tensorflow-cpu/cpu-job.yaml ./tensorflow-gpu/gpu-job.yaml
