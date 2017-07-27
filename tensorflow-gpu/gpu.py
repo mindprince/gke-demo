@@ -27,6 +27,6 @@ def get_times(maximum_time):
             if time_taken > maximum_time:
                 return size_and_time
 
-size_and_time = get_times(2)
+size_and_time = get_times(5)
 for size, time in size_and_time:
     print(size, time)

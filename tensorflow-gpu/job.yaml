@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
       - name: tensorflow-gpu
-        image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.1"
+        image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.2"
         command: ["python",  "/gpu.py"]
         resources:
           limits:
