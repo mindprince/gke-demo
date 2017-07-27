@@ -6,4 +6,4 @@ RUN apt-get update && \
 
 RUN pip install --upgrade tensorflow
 
-COPY ./cpu.py cpu.py
+COPY ./matmul.py matmul.py

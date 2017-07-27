@@ -9,8 +9,8 @@ spec:
     spec:
       containers:
       - name: tensorflow-gpu
-        image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.2"
-        command: ["python",  "/gpu.py"]
+        image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.3"
+        command: ["python",  "/matmul.py", "/gpu:0", "20"]
         resources:
           limits:
             alpha.kubernetes.io/nvidia-gpu: 1

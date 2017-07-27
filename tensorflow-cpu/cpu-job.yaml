@@ -9,6 +9,6 @@ spec:
     spec:
       containers:
       - name: tensorflow-cpu
-        image: "gcr.io/agarwalrohit-sandbox/tensorflow:v0.2"
-        command: ["python",  "/cpu.py"]
+        image: "gcr.io/agarwalrohit-sandbox/tensorflow-cpu:v0.3"
+        command: ["python",  "/matmul.py", "/cpu:0", "20"]
       restartPolicy: Never

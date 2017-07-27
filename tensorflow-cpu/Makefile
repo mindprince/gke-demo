@@ -1,6 +1,6 @@
-TAG?=v0.2
+TAG?=v0.3
 REGISTRY?=gcr.io/agarwalrohit-sandbox
-IMAGE=tensorflow
+IMAGE=tensorflow-cpu
 
 build:
 	docker build --pull -t ${REGISTRY}/${IMAGE}:${TAG} .
