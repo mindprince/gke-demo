@@ -1,0 +1,8 @@
+# To start the cluster
+gcloud alpha container clusters create --enable-kubernetes-alpha --accelerator=type=nvidia-tesla-k80,count=2 --zone=us-west1-b --cluster-version 1.7.1 my-gpu-cluster
+
+# To install the drivers
+kubectl create -f https://raw.githubusercontent.com/ContainerEngine/accelerators/master/cos-nvidia-gpu-installer/daemonset.yaml
+
+# Check whether kubectl sees GPUs
+kubectl get nodes -o yaml | grep -E 'hostname:|nvidia-gpu'

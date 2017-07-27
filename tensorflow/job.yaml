@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tensorflow-cpu
+spec:
+  template:
+    metadata:
+      name: tensorflow-cpu
+    spec:
+      containers:
+      - name: tensorflow-cpu
+        image: "gcr.io/agarwalrohit-sandbox/tensorflow:v0.1"
+        command: ["python",  "/cpu.py"]
+      restartPolicy: Never

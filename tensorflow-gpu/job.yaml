@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tensorflow-gpu
+spec:
+  template:
+    metadata:
+      name: tensorflow-gpu
+    spec:
+      containers:
+      - name: tensorflow-gpu
+        image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.1"
+        command: ["python",  "/gpu.py"]
+        resources:
+          limits:
+            alpha.kubernetes.io/nvidia-gpu: 1
+        volumeMounts:
+          - name: "nvidia-libraries"
+            mountPath: "/usr/local/nvidia/lib64"
+      restartPolicy: Never
+      volumes:
+        - name: "nvidia-libraries"
+          hostPath:
+            path: "/home/kubernetes/bin/nvidia/lib"
