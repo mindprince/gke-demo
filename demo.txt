@@ -1,13 +1,30 @@
-# To start the cluster
-gcloud alpha container clusters create --enable-kubernetes-alpha --accelerator=type=nvidia-tesla-k80,count=2 --zone=us-west1-b --cluster-version=1.7.2 gpu-cluster-1
+================
+GPUs on GKE Demo
+================
 
-# To install the drivers
-kubectl create -f https://raw.githubusercontent.com/ContainerEngine/accelerators/master/cos-nvidia-gpu-installer/daemonset.yaml
+# User Guide: https://docs.google.com/document/d/1hYOqaOVSu68ZaUsmCKwyP6kf6UtlTMiE_hxoJ2uUqvs/edit
 
-# Check whether kubectl sees GPUs
-kubectl get nodes -o yaml | grep -E 'hostname:|nvidia-gpu'
+# Start the cluster
+# --accelerators is only available in the alpha surface of gcloud.
+# accelerators are only supported on alpha clusters of GKE.
+# We require cluster versions 1.7.x or later.
+    gcloud alpha container clusters create \
+        --enable-kubernetes-alpha \
+        --accelerator=type=nvidia-tesla-k80,count=2 \
+        --zone=us-west1-b \
+        --cluster-version=1.7.2 \
+            gpu-cluster-1
 
-------
+
+# Install the drivers
+# This restarts the nodes. Takes around 10m for the installation to finish.
+    kubectl create -f https://raw.githubusercontent.com/ContainerEngine/accelerators/master/cos-nvidia-gpu-installer/daemonset.yaml
+
+
+# Make sure GPUs are available
+    kubectl get nodes -o yaml | grep -E 'hostname:|nvidia-gpu'
+
+-----------------------------------------------------------
 
 # Start the tensorflow job with CPUs
 kubectl create -f tensorflow-cpu/cpu-job.yaml
@@ -39,3 +56,8 @@ git diff --no-index ./tensorflow-cpu/matmul.py ./tensorflow-gpu/matmul.py
 
 # Important differences
 git diff --no-index ./tensorflow-cpu/cpu-job.yaml ./tensorflow-gpu/gpu-job.yaml
+
+-----------------------------------------------------------
+
+# Delete the cluster
+    gcloud container clusters delete gpu-cluster-1 --zone us-west1-b
