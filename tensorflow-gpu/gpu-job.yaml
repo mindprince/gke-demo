@@ -13,12 +13,5 @@ spec:
         command: ["python",  "/matmul.py", "/gpu:0", "20"]
         resources:
           limits:
-            alpha.kubernetes.io/nvidia-gpu: 1
-        volumeMounts:
-          - name: "nvidia-libraries"
-            mountPath: "/usr/local/nvidia/lib64" # This path is special; it is expected to be present in `/etc/ld.so.conf` inside the container image.
+            nvidia.com/gpu: 1
       restartPolicy: Never
-      volumes:
-        - name: "nvidia-libraries"
-          hostPath:
-            path: "/home/kubernetes/bin/nvidia/lib"
