@@ -1,4 +1,4 @@
-TAG?=v0.3
+TAG?=v0.4
 REGISTRY?=gcr.io/agarwalrohit-sandbox
 IMAGE=tensorflow-gpu
 

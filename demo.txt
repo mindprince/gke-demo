@@ -2,27 +2,24 @@
 GPUs on GKE Demo
 ================
 
-# User Guide: https://docs.google.com/document/d/1hYOqaOVSu68ZaUsmCKwyP6kf6UtlTMiE_hxoJ2uUqvs/edit
+# User Guide: https://cloud.google.com/kubernetes-engine/docs/concepts/gpus
 
-# Start the cluster
-# --accelerators is only available in the alpha surface of gcloud.
-# accelerators are only supported on alpha clusters of GKE.
-# We require cluster versions 1.7.x or later.
-    gcloud alpha container clusters create \
-        --enable-kubernetes-alpha \
-        --accelerator=type=nvidia-tesla-k80,count=2 \
+# --accelerators is only available in the alpha and beta surfaces of gcloud.
+# We require cluster versions 1.9.x or later.
+    gcloud beta container clusters create \
+        --accelerator=type=nvidia-tesla-k80 \
         --zone=us-west1-b \
-        --cluster-version=1.7.2 \
+        --cluster-version=1.9.1-gke.0 \
             gpu-cluster-1
 
 
 # Install the drivers
-# This restarts the nodes. Takes around 10m for the installation to finish.
-    kubectl create -f https://raw.githubusercontent.com/ContainerEngine/accelerators/master/cos-nvidia-gpu-installer/daemonset.yaml
+# This restarts the nodes. Takes around 3m for the installation to finish.
+    kubectl create -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml
 
 
 # Make sure GPUs are available
-    kubectl get nodes -o yaml | grep -E 'hostname:|nvidia-gpu'
+    kubectl get nodes -l cloud.google.com/gke-accelerator -ojson | jq .items[].status.capacity
 
 -----------------------------------------------------------
 
@@ -30,23 +27,23 @@ GPUs on GKE Demo
 kubectl create -f tensorflow-cpu/cpu-job.yaml
 
 # Check that the job is finished
-kubectl get all
+kubectl get pods --show-all
 
 # Start the tensorflow job with GPUs
 kubectl create -f tensorflow-gpu/gpu-job.yaml
 
 # Check that the job is finished
-kubectl get all
+kubectl get pods --show-all
 
 # See the results
-kubectl logs jobs/tensorflow-cpu | tail -25
-kubectl logs jobs/tensorflow-gpu | tail -25
+kubectl logs tensorflow-cpu | tail -25
+kubectl logs tensorflow-gpu | tail -25
 
 # Cleanup
-kubectl delete jobs/tensorflow-cpu jobs/tensorflow-gpu
+kubectl delete pods/tensorflow-cpu pods/tensorflow-gpu
 
 # List of files
-find . | grep -v git
+git ls-files
 
 # Only the tensorflow package is different
 git diff --no-index ./tensorflow-cpu/Dockerfile ./tensorflow-gpu/Dockerfile

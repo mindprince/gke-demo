@@ -1,14 +1,10 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: v1
+kind: Pod
 metadata:
   name: tensorflow-cpu
 spec:
-  template:
-    metadata:
-      name: tensorflow-cpu
-    spec:
-      containers:
-      - name: tensorflow-cpu
-        image: "gcr.io/agarwalrohit-sandbox/tensorflow-cpu:v0.3"
-        command: ["python",  "/matmul.py", "/cpu:0", "20"]
-      restartPolicy: Never
+  containers:
+  - name: tensorflow-cpu
+    image: "gcr.io/agarwalrohit-sandbox/tensorflow-cpu:v0.4"
+    command: ["python",  "/matmul.py", "/cpu:0", "200"]
+  restartPolicy: Never

@@ -10,7 +10,7 @@ device_name = sys.argv[1]
 # Do so many iterations
 maximum_iteration = int(sys.argv[2])
 
-matrix_sizes = range(500, 500 + 50*maximum_iteration, 50)
+matrix_sizes = range(500, 500 + 10*maximum_iteration, 10)
 
 # If the time taken for an iteration exceeds this many seconds, we quit
 maximum_time = 10

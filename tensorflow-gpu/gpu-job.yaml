@@ -1,17 +1,13 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: v1
+kind: Pod
 metadata:
   name: tensorflow-gpu
 spec:
-  template:
-    metadata:
-      name: tensorflow-gpu
-    spec:
-      containers:
-      - name: tensorflow-gpu
-        image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.3"
-        command: ["python",  "/matmul.py", "/gpu:0", "20"]
-        resources:
-          limits:
-            nvidia.com/gpu: 1
-      restartPolicy: Never
+  containers:
+  - name: tensorflow-gpu
+    image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.4"
+    command: ["python",  "/matmul.py", "/gpu:0", "200"]
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+  restartPolicy: Never
