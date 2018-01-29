@@ -5,6 +5,6 @@ metadata:
 spec:
   containers:
   - name: tensorflow-cpu
-    image: "gcr.io/agarwalrohit-sandbox/tensorflow-cpu:v0.4"
+    image: "gcr.io/agarwalrohit-sandbox/tensorflow-cpu:v0.5"
     command: ["python",  "/matmul.py", "/cpu:0", "200"]
   restartPolicy: Never

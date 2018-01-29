@@ -1,4 +1,4 @@
-TAG?=v0.4
+TAG?=v0.5
 REGISTRY?=gcr.io/agarwalrohit-sandbox
 IMAGE=tensorflow-cpu
 

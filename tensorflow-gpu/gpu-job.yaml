@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: tensorflow-gpu
-    image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.4"
+    image: "gcr.io/agarwalrohit-sandbox/tensorflow-gpu:v0.5"
     command: ["python",  "/matmul.py", "/gpu:0", "200"]
     resources:
       limits:
