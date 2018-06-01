@@ -4,6 +4,6 @@ RUN apt-get update && \
     apt-get install -y python-pip python-dev && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install tensorflow==1.5.0
+RUN pip install tensorflow==1.8.0
 
 COPY ./matmul.py matmul.py
