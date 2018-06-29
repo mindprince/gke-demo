@@ -4,35 +4,31 @@ GPUs on GKE Demo
 
 # User Guide: https://cloud.google.com/kubernetes-engine/docs/concepts/gpus
 
-# --accelerators is only available in the alpha and beta surfaces of gcloud.
 # We require cluster versions 1.9.x or later.
-    gcloud beta container clusters create \
+    gcloud container clusters create \
         --accelerator=type=nvidia-tesla-k80 \
         --zone=us-west1-b \
-        --cluster-version=1.9.1-gke.0 \
+        --cluster-version=1.10 \
             gpu-cluster-1
 
-
-# Install the drivers
-# This restarts the nodes. Takes around 3m for the installation to finish.
-    kubectl create -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml
-
+# Install the drivers. Takes around 2m for the installation to finish.
+    kubectl create -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/stable/nvidia-driver-installer/cos/daemonset-preloaded.yaml
 
 # Make sure GPUs are available
     kubectl get nodes -l cloud.google.com/gke-accelerator -ojson | jq .items[].status.capacity
 
 -----------------------------------------------------------
 
-# Start the tensorflow job with CPUs
+# Start the tensorflow pod with CPUs
 kubectl create -f tensorflow-cpu/cpu-job.yaml
 
-# Check that the job is finished
+# Check that the pod is finished
 kubectl get pods --show-all
 
-# Start the tensorflow job with GPUs
+# Start the tensorflow pod with GPUs
 kubectl create -f tensorflow-gpu/gpu-job.yaml
 
-# Check that the job is finished
+# Check that the pod is finished
 kubectl get pods --show-all
 
 # See the results
