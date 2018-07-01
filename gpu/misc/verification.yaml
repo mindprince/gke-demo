@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: gpu-verification
 spec:
+  restartPolicy: OnFailure
   containers:
     - name: gpu-verification
       image: "gcr.io/google_containers/busybox:1.24"
