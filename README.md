@@ -48,22 +48,6 @@ Cleanup
 
     kubectl delete pods/tensorflow-cpu pods/tensorflow-gpu
 
-List of files
-
-    git ls-files
-
-Only the tensorflow package is different
-
-    git diff --no-index ./tensorflow-cpu/Dockerfile ./tensorflow-gpu/Dockerfile
-
-No difference in the tensorflow program
-
-    git diff --no-index ./tensorflow-cpu/matmul.py ./tensorflow-gpu/matmul.py
-
-Important differences
-
-    git diff --no-index ./tensorflow-cpu/cpu-job.yaml ./tensorflow-gpu/gpu-job.yaml
-
 
 ## PyTorch example
 
