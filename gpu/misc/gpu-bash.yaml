@@ -1,0 +1,16 @@
+# After creating this, you can do:
+#     kubectl exec -ti gpu-bash bash
+# You can then run commands like nvidia-smi
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gpu-bash
+spec:
+  containers:
+    - name: gpu-bash
+      image: "nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04"
+      command: ["/bin/sh", "-c"]
+      args: ["sleep infinity"]
+      resources:
+        limits:
+          nvidia.com/gpu: 1
