@@ -9,11 +9,4 @@ spec:
       image: "gcr.io/google_containers/cuda-vector-add:v0.1"
       resources:
         limits:
-          alpha.kubernetes.io/nvidia-gpu: 1
-      volumeMounts:
-        - name: "nvidia-libraries"
-          mountPath: "/usr/local/nvidia/lib64"
-  volumes:
-    - name: "nvidia-libraries"
-      hostPath:
-        path: "/home/kubernetes/bin/nvidia/lib"
+          nvidia.com/gpu: 1
