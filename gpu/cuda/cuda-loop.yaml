@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cuda-vector-add-loop
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - name: cuda-vector-add
+      image: "gcr.io/google_containers/cuda-vector-add:v0.1"
+      resources:
+        limits:
+          nvidia.com/gpu: 1
+      command:
+      - /bin/sh
+      args:
+      - -c
+      - while true; do ./vectorAdd; done
